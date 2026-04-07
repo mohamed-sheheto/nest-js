@@ -26,7 +26,7 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string): UserEntity {
     const user = this.users.find((user) => user.id === id);
-    if (!user) throw new NotFoundException('user not found');
+    if (!user) throw new NotFoundException('user not found, please try again ');
 
     return user;
   }
@@ -42,13 +42,20 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: updateUserDto) {
-    return updateUserDto;
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: updateUserDto,
+  ): UserEntity {
+    const index = this.users.findIndex((user) => user.id === id);
+    return (this.users[index] = { ...this.users[index], ...updateUserDto });
   }
 
-  @Delete(':username')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('username') username: string): string {
-    return `${username} deleted`;
+  remove(@Param('id') id: string) {
+    const index = this.users.findIndex((user) => user.id === id);
+    this.users.splice(index, 1);
+
+    // this.users = this.users.filter((user) => user.id !== id);
   }
 }
