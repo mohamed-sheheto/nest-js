@@ -9,6 +9,7 @@ import {
   HttpCode,
   HttpStatus,
   NotFoundException,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { createUserDto } from './dtos/create-user.dto';
@@ -24,7 +25,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): UserEntity {
+  findOne(@Param('id', ParseUUIDPipe) id: string): UserEntity {
     const user = this.users.find((user) => user.id === id);
     if (!user) throw new NotFoundException('user not found, please try again ');
 
@@ -43,7 +44,7 @@ export class UsersController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: updateUserDto,
   ): UserEntity {
     const index = this.users.findIndex((user) => user.id === id);
@@ -52,7 +53,7 @@ export class UsersController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     const index = this.users.findIndex((user) => user.id === id);
     this.users.splice(index, 1);
 
