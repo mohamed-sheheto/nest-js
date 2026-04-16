@@ -14,6 +14,7 @@ import { createUserDto } from './dtos/create-user.dto';
 import { updateUserDto } from './dtos/update-user.dto';
 import { UserEntity } from './user.entity';
 import { UserService } from './users.service';
+import { userResponseDto } from './dtos/user-response.dto';
 
 @Controller('users')
 export class UsersController {
@@ -31,7 +32,7 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() createUserDto: createUserDto): UserEntity {
+  create(@Body() createUserDto: createUserDto): userResponseDto {
     return this.userService.createUser(createUserDto);
   }
 
