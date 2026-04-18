@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { updateUserDto } from './dtos/update-user.dto';
 import { APP_NAME, USER_HABITS } from './user.constants';
 import { userResponseDto } from './dtos/user-response.dto';
+import { resolve } from 'path';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class UserService {
@@ -12,8 +13,8 @@ export class UserService {
     @Inject(APP_NAME) private APP_NAME: string,
     @Inject(USER_HABITS) private USER_HABITS: string[],
   ) {
-    console.log(this.APP_NAME);
-    console.log(this.USER_HABITS);
+    // console.log(this.APP_NAME);
+    // console.log(this.USER_HABITS);
   }
   private users: UserEntity[] = [];
 
