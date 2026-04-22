@@ -9,6 +9,8 @@ import {
   HttpCode,
   HttpStatus,
   ParseUUIDPipe,
+  SetMetadata,
+  // UseGuards,
   // UseInterceptors,
   // ClassSerializerInterceptor,
 } from '@nestjs/common';
@@ -17,13 +19,17 @@ import { updateUserDto } from './dtos/update-user.dto';
 import { UserEntity } from './user.entity';
 import { UserService } from './users.service';
 import { userResponseDto } from './dtos/user-response.dto';
+import { Is_Public_Key, Public } from '../common/decorators/public.decorator';
+// import { AuthGuard } from '../common/guards/auth.guard';
 // import { resolve } from 'path';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UserService) {}
-
   private readonly users: UserEntity[] = [];
+
+  @SetMetadata(Is_Public_Key, true)
+  @Public()
   @Get()
   // async findAll(): Promise<UserEntity[]> {
   // await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -37,6 +43,7 @@ export class UsersController {
   }
 
   // @UseInterceptors(ClassSerializerInterceptor)
+  // @UseGuards(AuthGuard)
   @Post()
   create(@Body() createUserDto: createUserDto): userResponseDto {
     return this.userService.createUser(createUserDto);

@@ -5,7 +5,6 @@ import { v4 as uuid } from 'uuid';
 import { updateUserDto } from './dtos/update-user.dto';
 import { APP_NAME, USER_HABITS } from './user.constants';
 import { userResponseDto } from './dtos/user-response.dto';
-import { resolve } from 'path';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class UserService {
