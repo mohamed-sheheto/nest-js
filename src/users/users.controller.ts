@@ -20,12 +20,24 @@ import { UserEntity } from './user.entity';
 import { UserService } from './users.service';
 import { userResponseDto } from './dtos/user-response.dto';
 import { Is_Public_Key, Public } from '../common/decorators/public.decorator';
+import { ConfigService } from '@nestjs/config';
 // import { AuthGuard } from '../common/guards/auth.guard';
 // import { resolve } from 'path';
 
+interface config {
+  DATABASE_PASSWORD: number;
+  DATABASE_HOST: string;
+}
+
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly configService: ConfigService<config>,
+  ) {
+    console.log('ENV VARIABLE =>', process.env.ENV);
+    console.log(this.configService.get('DATABASE_HOST', { infer: true }));
+  }
   private readonly users: UserEntity[] = [];
 
   @SetMetadata(Is_Public_Key, true)
